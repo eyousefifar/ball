@@ -8,12 +8,16 @@ import com.facebook.react.ReactPackage;
 import java.util.List;
 import java.util.Arrays;
 
+// react native navigation
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
 
 // react native gesture handler
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+
+// react native reanimated
+import com.swmansion.reanimated.ReanimatedPackage;
 
 
 // react native async storage
@@ -140,7 +144,8 @@ public class MainApplication extends NavigationApplication {
                 new KeychainPackage(),
                 new RNSharePackage(),
                 new SvgPackage(),
-                new VectorIconsPackage()
+                new VectorIconsPackage(),
+                new ReanimatedPackage()
 
         );
     }
