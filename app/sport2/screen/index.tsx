@@ -1,19 +1,20 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import {observer} from 'mobx-react';
 
-import { BottomNavigation } from '../../ball-library';
+import {BottomNavigation} from '../../ball-library';
 
 // internal screens
 import Sport from './Sport';
-import { SportReservation } from '../../sportReservation2';
+import {SportReservation} from '../../sportReservation2';
 
 interface ISportTabs {
-  sportId:string,
-  initialScreenIndex: number,
+  sportId: string;
+  initialScreenIndex: number;
 }
+
 class SportTabs extends React.Component<ISportTabs> {
   public render() {
-    const { sportId, initialScreenIndex } = this.props;
+    const {sportId, initialScreenIndex} = this.props;
     return (
       <BottomNavigation
         renderProps={[
@@ -21,17 +22,17 @@ class SportTabs extends React.Component<ISportTabs> {
             tabTitle: 'خانه',
             tabIcon: {
               type: 'antDesign',
-              name: 'home'
+              name: 'home',
             },
-            screen: <Sport sportId={sportId}/>
+            screen: <Sport sportId={sportId} />,
           },
           {
             tabTitle: 'رزرو',
             tabIcon: {
               type: 'ball',
-              name: 'calendar'
+              name: 'calendar',
             },
-            screen: <SportReservation sportId={sportId}/>
+            screen: <SportReservation sportId={sportId} />,
           },
         ]}
         initialScreenIndex={initialScreenIndex}

@@ -1,26 +1,26 @@
 import React from 'react';
-import { View, ScrollView, Platform } from 'react-native';
-import { Observer } from 'mobx-react';
+import {View, ScrollView, Platform} from 'react-native';
+import {Observer} from 'mobx-react';
 
 // local
 import TabViewWrapper from './TabViewWrapper';
 import Tabs from './Tabs';
 // types
-import { bottomNavigationProps } from './types';
+import {bottomNavigationProps} from './types';
 
 // styles
 import styleGenerator from './styles';
-import { widthPercentageToDP } from 'react-native-responsive-screen';
+import {widthPercentageToDP} from 'react-native-responsive-screen';
 import UIClass from './UI';
 class BottomNavigation extends React.Component<bottomNavigationProps> {
   public static defaultProps = {
-    initialScreenIndex: 0
+    initialScreenIndex: 0,
   };
   private UI = new UIClass();
 
   public scrollRef = React.createRef();
   private getRenderProps = () => {
-    const { renderProps, initialScreenIndex } = this.props;
+    const {renderProps, initialScreenIndex} = this.props;
 
     const tabs = [];
     const screens = [];
@@ -30,27 +30,27 @@ class BottomNavigation extends React.Component<bottomNavigationProps> {
         index,
         tabTitle: renderProps[index].tabTitle,
         tabIcon: renderProps[index].tabIcon,
-        onPress: this.onPress
+        onPress: this.onPress,
       });
       screens.push({
         index,
         screen: renderProps[index].screen,
-        isInitial: initialScreenIndex === index
+        isInitial: initialScreenIndex === index,
       });
     }
-    return { tabs, screens };
+    return {tabs, screens};
   };
   private fullWidth = widthPercentageToDP('100%');
   private onPress = (index: number) => {
     this.scrollRef &&
       this.scrollRef.current.scrollTo({
         x: this.fullWidth * index,
-        animated: false
+        animated: false,
       });
   };
   private timeout: any;
   componentDidMount() {
-    const { initialScreenIndex } = this.props;
+    const {initialScreenIndex} = this.props;
     this.timeout = setTimeout(() => {
       this.onPress(initialScreenIndex ? initialScreenIndex : 0);
     }, 0);
@@ -60,9 +60,9 @@ class BottomNavigation extends React.Component<bottomNavigationProps> {
   }
 
   public render() {
-    const { initialScreenIndex } = this.props;
+    const {initialScreenIndex} = this.props;
     const styles = styleGenerator();
-    const { tabs, screens } = this.getRenderProps();
+    const {tabs, screens} = this.getRenderProps();
     return (
       <View style={styles.container}>
         <ScrollView
@@ -76,8 +76,7 @@ class BottomNavigation extends React.Component<bottomNavigationProps> {
           bounces={false}
           nestedScrollEnabled
           keyboardDismissMode={'none'}
-          keyboardShouldPersistTaps={'always'}
-        >
+          keyboardShouldPersistTaps={'always'}>
           {screens.map(item => {
             return (
               <Observer key={`${item.index}`}>
@@ -86,8 +85,7 @@ class BottomNavigation extends React.Component<bottomNavigationProps> {
                     isFirstViewableTab={item.isInitial}
                     key={`${item.index}`}
                     firstTabIsRendered={this.UI.firstTabIsRendered}
-                    setFirstTabRendered={this.UI.setFirstTabRendered}
-                  >
+                    setFirstTabRendered={this.UI.setFirstTabRendered}>
                     {item.screen}
                   </TabViewWrapper>
                 )}

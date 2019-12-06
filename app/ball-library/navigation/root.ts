@@ -1,4 +1,7 @@
-import {Navigation} from 'react-native-navigation';
+import {
+  Navigation,
+  OptionsModalPresentationStyle,
+} from 'react-native-navigation';
 
 // screens register functions
 import {registerHomeScreens} from '../../home2';
@@ -57,14 +60,19 @@ const setRoot = async () => {
       backgroundColor: Colors.primaryPurple,
       style: 'light',
     },
+
     topBar: {
       visible: false,
       height: 0,
     },
+    modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
+
     layout: {
       direction: 'ltr',
       orientation: ['portrait'],
       backgroundColor: '#FFF',
+
+      //fitSystemWindows: true,
     },
     overlay: {
       handleKeyboardEvents: true,
@@ -72,45 +80,59 @@ const setRoot = async () => {
     animations: {
       push: {
         waitForRender: true,
+        enabled: true,
+
         content: {
           enabled: true,
+          waitForRender: true,
           x: {
-            from: 1.2 * widthPercentageToDP('100%'),
+            from: 2 * widthPercentageToDP('100%'),
             to: 0,
-            interpolation: 'accelerate',
-            duration: 160,
+            interpolation: 'decelerate',
+            duration: 240,
           },
         },
       },
       showModal: {
         waitForRender: true,
+
+        enabled: true,
+
         x: {
-          from: 1.2 * widthPercentageToDP('100%'),
+          from: 2 * widthPercentageToDP('100%'),
           to: 0,
-          interpolation: 'accelerate',
-          duration: 160,
+          interpolation: 'decelerate',
+          duration: 240,
         },
       },
       dismissModal: {
         enabled: true,
-        waitForRender: true,
+
+        waitForRender: false,
         x: {
-          from: 0,
-          to: widthPercentageToDP('80%'),
-          duration: 240,
-          interpolation: 'accelerate',
+         from: 0,
+         to: 4 * widthPercentageToDP('100%'),
+          duration: 420,
+          interpolation: "accelerate",
         },
+        
       },
       pop: {
         enabled: true,
-        waitForRender: true,
+        waitForRender: false,
         content: {
+          enabled: true,
+          waitForRender: false,
+
           x: {
             from: 0,
-            to: widthPercentageToDP('80%'),
-            duration: 240,
-            interpolation: 'accelerate',
+            to:4 * widthPercentageToDP('100%'),
+            duration: 420,
+            interpolation: "accelerate",
+
           },
+
+         
         },
       },
     },
@@ -141,6 +163,7 @@ const setRoot = async () => {
                 },
               },
             },
+
             children: [
               {
                 component: {

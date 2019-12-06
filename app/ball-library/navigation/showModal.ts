@@ -1,6 +1,8 @@
-import {Navigation} from 'react-native-navigation';
+import {
+  Navigation,
+  OptionsModalPresentationStyle,
+} from 'react-native-navigation';
 import state from './state';
-import {widthPercentageToDP} from 'react-native-responsive-screen';
 import authCheck from './authCheck';
 
 interface IShowModal {
@@ -15,6 +17,7 @@ export default async (args: IShowModal) => {
     if (state.canAddScreen(id, 'showModal')) {
       await Navigation.showModal({
         stack: {
+          
           children: [
             {
               component: {

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import memoize from 'fast-memoize';
 
 export default memoize((scrollView: boolean | undefined) => {
@@ -8,11 +8,11 @@ export default memoize((scrollView: boolean | undefined) => {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      marginVertical: scrollView ? 64 : 0
+      marginVertical: scrollView ? 64 : 0,
     },
     loading: {
       width: size,
-      height: size
-    }
+      height: size,
+    },
   });
 });
