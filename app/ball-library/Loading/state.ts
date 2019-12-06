@@ -36,20 +36,11 @@ class loadingState {
   );
 }
 
-export class mountingState {
-  mounted: boolean = false;
-  setMounted = () => {
-    this.mounted = true
-  }
-}
 decorate(loadingState, {
   currentAppearedScreen: observable,
   setCurrentScreen: action
 });
-decorate(mountingState, {
-  mounted: observable,
-  setMounted: action
-})
+
 
 const state = new loadingState();
 

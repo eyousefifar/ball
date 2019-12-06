@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
-import { View } from 'react-native';
+import React, {ReactElement} from 'react';
+import {View} from 'react-native';
 import LottieView from 'lottie-react-native';
-import { observable,action } from 'mobx'
-import { observer } from 'mobx-react';
+import {observable, action} from 'mobx';
+import {observer} from 'mobx-react';
 import state, {mountingState} from './state';
 // styles
 
@@ -17,26 +17,32 @@ interface ILoading {
 }
 
 class Loading extends React.Component<ILoading> {
-  private darkLoading = require('./darkLoading.json');
-  private lightLoading = require('./lightLoading.json');
-  private mounting = new mountingState();
-  private timer = null;
-  componentDidMount(){
-    this.timer = setTimeout(()=> {
-      this.mounting.setMounted();
-    }, 60)
+  constructor(props: ILoading){
+    super(props);
+    const {screenId} = props;
+    this.state = {
+      didScreenAppeared: screenId === 'Home'? true : false,
+      loaded: false
+    }
   }
-  componentWillUnmount() {
-    clearTimeout(this.timer);
+  private darkLoading = require('./darkLoading.json');
+  private lightLoading = require('./lightLoading.json'); 
+  componentDidUpdate(prevProps, prevState){
+    const {screenId } = this.props;
+    if(state.currentAppearedScreen === screenId && !prevState.didScreenAppeared ){
+      this.setState({didScreenAppeared: true }); 
+    }
+    if (prevProps.loaded !== this.props.loaded){
+      this.setState({loaded: this.props.loaded});
+    }
   }
   render() {
-    const { loaded, children, scrollView, screenId, dark } = this.props;
+    const {children, scrollView, dark} = this.props;
     const animationSource = dark ? this.darkLoading : this.lightLoading;
 
     const styles = styleGenerator(scrollView);
-    const didScreenAppeared =
-      screenId === 'Home' ? true : state.currentAppearedScreen === screenId;
-    if ((loaded && didScreenAppeared) || this.mounting.mounted  ) {
+
+    if ((this.state.loaded && this.state.didScreenAppeared)) {
       return children;
     } else {
       return (
