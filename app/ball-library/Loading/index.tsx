@@ -1,9 +1,8 @@
-import React, {ReactElement} from 'react';
-import {View} from 'react-native';
+import React, { ReactElement } from 'react';
+import { View } from 'react-native';
 import LottieView from 'lottie-react-native';
-import {observable, action} from 'mobx';
-import {observer} from 'mobx-react';
-import state, {mountingState} from './state';
+import { observer } from 'mobx-react';
+import state from './state';
 // styles
 
 import styleGenerator from './styles';
@@ -17,32 +16,16 @@ interface ILoading {
 }
 
 class Loading extends React.Component<ILoading> {
-  constructor(props: ILoading){
-    super(props);
-    const {screenId} = props;
-    this.state = {
-      didScreenAppeared: screenId === 'Home'? true : false,
-      loaded: false
-    }
-  }
   private darkLoading = require('./darkLoading.json');
-  private lightLoading = require('./lightLoading.json'); 
-  componentDidUpdate(prevProps, prevState){
-    const {screenId } = this.props;
-    if(state.currentAppearedScreen === screenId && !prevState.didScreenAppeared ){
-      this.setState({didScreenAppeared: true }); 
-    }
-    if (prevProps.loaded !== this.props.loaded){
-      this.setState({loaded: this.props.loaded});
-    }
-  }
+  private lightLoading = require('./lightLoading.json');
   render() {
-    const {children, scrollView, dark} = this.props;
+    const { loaded, children, scrollView, screenId, dark } = this.props;
     const animationSource = dark ? this.darkLoading : this.lightLoading;
 
     const styles = styleGenerator(scrollView);
-
-    if ((this.state.loaded && this.state.didScreenAppeared)) {
+    const didScreenAppeared =
+      screenId === 'Home' ? true : state.currentAppearedScreen === screenId;
+    if (loaded && didScreenAppeared) {
       return children;
     } else {
       return (

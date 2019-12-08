@@ -4,12 +4,16 @@ import { Navigation } from 'react-native-navigation';
 
 class loadingState {
   lastScreen: string | null = null;
+  suspendedScreen: string | null = null;
   currentAppearedScreen: string | null = null;
   setCurrentScreen = (componentName: string | null) => {
     this.lastScreen = this.currentAppearedScreen;
-    this.currentAppearedScreen = componentName;
+    this.suspendedScreen = componentName;
+    
   };
-
+  setSuspendedScreen = () => {
+    this.currentAppearedScreen = this.suspendedScreen;
+  }
   appearEventListener = Navigation.events().registerComponentDidAppearListener(
     ({ componentId, componentName, passProps }) => {
       if (
@@ -34,11 +38,15 @@ class loadingState {
       }
     }
   );
+  onCompeleteAnimation = Navigation.events().registerCommandCompletedListener(()=> {
+      this.setSuspendedScreen();
+  })
 }
 
 decorate(loadingState, {
   currentAppearedScreen: observable,
-  setCurrentScreen: action
+  setCurrentScreen: action,
+  setSuspendedScreen: action
 });
 
 
